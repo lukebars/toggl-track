@@ -25,7 +25,16 @@ declare namespace Preferences {
   /** Preferences accessible in the `manageClients` command */
   export type ManageClients = ExtensionPreferences & {}
   /** Preferences accessible in the `menuBar` command */
-  export type MenuBar = ExtensionPreferences & {}
+  export type MenuBar = ExtensionPreferences & {
+  /** Show Running Entry Title in Menu Bar - Whether or not to show the entry title in the menu bar. */
+  "showTitleInMenuBar": boolean,
+  /** Show Running Entry Time in Menu Bar - Whether or not to show the entry timer in the menu bar. */
+  "showTimeInMenuBar": boolean,
+  /** Show Running Entry Project in Menu Bar - Whether or not to show the entry project in the menu bar. */
+  "showProjectInMenuBar": boolean,
+  /** Show Running Entry Client in Menu Bar - Whether or not to show the entry client in the menu bar. */
+  "showClientInMenuBar": boolean
+}
   /** Preferences accessible in the `manageProjects` command */
   export type ManageProjects = ExtensionPreferences & {}
 }
