@@ -13,17 +13,11 @@ import { useTotalDurationToday } from "@/hooks/useTotalDurationToday";
 dayjs.extend(duration);
 
 function ListView() {
-  const {
-    timeEntries,
-    runningTimeEntry,
-    isLoading,
-    revalidateTimeEntries,
-    revalidateRunningTimeEntry,
-    timeEntriesWithUniqueProjectAndDescription,
-  } = useProcessedTimeEntries();
+  const { timeEntries, runningTimeEntry, isLoading, timeEntriesWithUniqueProjectAndDescription } =
+    useProcessedTimeEntries();
 
   const totalDurationToday = useTotalDurationToday(timeEntries, runningTimeEntry);
-  const { resumeTimeEntry } = useTimeEntryActions(revalidateRunningTimeEntry, revalidateTimeEntries);
+  const { resumeTimeEntry } = useTimeEntryActions();
 
   return (
     <List
@@ -31,9 +25,7 @@ function ListView() {
       throttle
       navigationTitle={isLoading ? undefined : `Today: ${formatSeconds(totalDurationToday)}`}
     >
-      {runningTimeEntry && (
-        <RunningTimeEntry {...{ runningTimeEntry, revalidateRunningTimeEntry, revalidateTimeEntries }} />
-      )}
+      {runningTimeEntry && <RunningTimeEntry runningTimeEntry={runningTimeEntry} />}
       <List.Section title="Actions">
         <List.Item
           title="Create a new time entry"
@@ -45,10 +37,7 @@ function ListView() {
                 icon={{ source: Icon.Clock }}
                 target={
                   <ExtensionContextProvider>
-                    <TimeEntryForm
-                      revalidateRunningTimeEntry={revalidateRunningTimeEntry}
-                      revalidateTimeEntries={revalidateTimeEntries}
-                    />
+                    <TimeEntryForm />
                   </ExtensionContextProvider>
                 }
               />
@@ -78,11 +67,7 @@ function ListView() {
                     icon={{ source: Icon.Plus }}
                     target={
                       <ExtensionContextProvider>
-                        <TimeEntryForm
-                          revalidateRunningTimeEntry={revalidateRunningTimeEntry}
-                          revalidateTimeEntries={revalidateTimeEntries}
-                          initialValues={timeEntry}
-                        />
+                        <TimeEntryForm initialValues={timeEntry} />
                       </ExtensionContextProvider>
                     }
                   />
